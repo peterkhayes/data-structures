@@ -30,6 +30,17 @@ var makeLinkedList = function(){
     }
   };
 
+  list.contains = function(target){
+    var current = this.tail;
+    while (current !== null) {
+      if (current.value === target) {
+        return true;
+      }
+      current = current.next;
+    }
+    return false;
+  };
+
   return list;
 };
 
