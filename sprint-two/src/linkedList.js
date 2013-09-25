@@ -4,16 +4,6 @@ var makeLinkedList = function(){
   list.head = null;
   list.tail = null;
 
-  list.addToTail = function(){
-  };
-
-  list.removeHead = function(){
-  };
-
-  list.contains = function(){
-  };
-
-  return list;
 };
 
 var makeNode = function(value){
