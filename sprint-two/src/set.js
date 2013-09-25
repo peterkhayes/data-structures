@@ -1,24 +1,25 @@
 var makeSet = function(){
   var set = Object.create(setMethods);
-  set._storage = undefined;
+  set._storage = {};
   return set;
 };
 
 var setMethods = {};
 
-setMethods.add = function (element){
+setMethods.add = function (element) {
   this._storage[element] = true;
 };
 
-setMethods.contains = function (target){
+setMethods.contains = function (target) {
   var result = false;
   for (var key in this._storage) {
-    if (key === target) {
+    if (this._storage[key] && key === target) {
       result = true;
     }
   }
   return result;
 };
 
-setMethods.remove = function(){
+setMethods.remove = function (element) {
+  this._storage[element] = undefined;
 };

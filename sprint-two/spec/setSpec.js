@@ -19,16 +19,12 @@ describe("set", function() {
     expect(set.contains("yo")).toEqual(false);
   });
   
-  it("should be able to remove elements", function() {
+  it("should be able to remove elements, including non-existent ones", function() {
     set.add("hi");
     expect(set.contains("hi")).toEqual(true);
     set.remove("hi");
+    set.remove("hello");
     expect(set.contains("hi")).toEqual(false);
-  });
-
-  it("should be ok with removing from an empty set", function() {
-    set.remove();
-    set.remove();
   });
 
   it("should not count double-adding", function() {
