@@ -13,7 +13,7 @@ describe("tree", function() {
 
   it("should not have value or children if not set", function() {
     expect(tree.value).toEqual(undefined);
-    expect(tree.children).toEqual(undefined);
+    expect(tree.children).toEqual([]);
   });
 
   it("should be able to add children", function() {
