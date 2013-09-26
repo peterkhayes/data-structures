@@ -14,16 +14,35 @@ var HashTable = function(){
 
 HashTable.prototype.insert = function(k, v){
   var i = getIndexBelowMaxForKey(k, this._limit);
-  console.log(i);
-  this._storage.set(i, v);
+  var slot = this._storage.get(i);
+  if (slot) {
+    slot.push([k,v]); // slot stores two-object arrays, which are key-value pairs.  using objects is cheating?
+  } else {
+    this._storage.set(i, [[k,v]]);
+  }
 };
 
 HashTable.prototype.retrieve = function(k){
   var i = getIndexBelowMaxForKey(k, this._limit);
-  return this._storage.get(i);
+  var slot = this._storage.get(i);
+  for (var j = 0; j < slot.length; j++) {
+    if (slot[j][0] === k) { // again, slot[a][0] is the key in the a'th place of slot, slot[a][1] is the value for that key.
+      return slot[j][1];
+    }
+  }
+  return undefined;
 };
 
-HashTable.prototype.remove = function(){
+HashTable.prototype.remove = function(k){
+  var i = getIndexBelowMaxForKey(k, this._limit);
+  var slot = this._storage.get(i);
+  for (var j = 0; j < slot.length; j++) {
+    if (slot[j][0] === k) {
+      console.log(slot);
+      slot.splice(j, 1);
+    }
+  }
+
 };
 
 // NOTE: For this code to work, you will NEED the code from hashTableHelpers.js
