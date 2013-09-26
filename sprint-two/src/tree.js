@@ -2,6 +2,7 @@ var makeTree = function(){
   var newTree = Object.create(treeMethods);
   newTree.value = undefined;
   newTree.children = [];
+  newTree.parent = null;
 
   return newTree;
 };
@@ -9,6 +10,7 @@ var makeTree = function(){
 var treeMethods = {};
 
 treeMethods.addChild = function (child){
+  child.parent = this;
   this.children.push(child);
 };
 
@@ -20,4 +22,14 @@ treeMethods.contains = function(target){
     }
   }
   return result;
+};
+
+treeMethods.removeFromParent = function() {
+  var childArray = this.parent.children;
+  for (var i = 0; i < childArray.length; i++) {
+    if (childArray[i] === this) {
+      childArray.splice(i, 1);
+    }
+  }
+  this.parent = null;
 };
