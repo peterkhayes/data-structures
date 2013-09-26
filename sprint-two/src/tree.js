@@ -33,3 +33,13 @@ treeMethods.removeFromParent = function() {
   }
   this.parent = null;
 };
+
+treeMethods.DFTraverse = function (iterator) {
+  iterator(this.value);
+
+  if (this.children.length) {
+    for (var i = 0; i < this.children.length; i++) {
+      this.children[i].DFTraverse(iterator);
+    }
+  }
+};
