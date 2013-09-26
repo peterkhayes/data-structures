@@ -66,5 +66,54 @@ describe("tree", function() {
     expect(child1.contains(1)).toEqual(true);
   });
 
+  var generateFullTree = function() {
+    var head = makeTree();
+    var c1 = makeTree();
+    var c2 = makeTree();
+    var g1 = makeTree();
+    var g2 = makeTree();
+    var g3 = makeTree();
+    var g4 = makeTree();
+
+    head.value = 1;
+    c1.value = 2;
+    c2.value = 3;
+    g1.value = 4;
+    g2.value = 5;
+    g3.value = 6;
+    g4.value = 7;
+
+    head.addChild(c1);
+    head.addChild(c2);
+    c1.addChild(g1);
+    c1.addChild(g2);
+    c2.addChild(g3);
+    c2.addChild(g4);
+
+    return head;
+  };
+
+  it("should be able to traverse, depth first", function() {
+    tree = generateFullTree();
+
+    var results = [];
+    tree.DFtraverse(function (value) {
+      results.push(value);
+    });
+
+    expect(results).toEqual([1, 2, 4, 5, 3, 6, 7]);
+  });
+
+  it("should be able to traverse, breadth first", function() {
+    tree = generateFullTree();
+
+    var results = [];
+    tree.DFtraverse(function (value) {
+      results.push(value);
+    });
+
+    expect(results).toEqual([1, 2, 3, 4, 5, 6, 7]);
+  });
+
   // Add more tests here to test the functionality of tree.
 });
