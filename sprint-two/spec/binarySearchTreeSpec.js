@@ -51,5 +51,18 @@ describe("binarySearchTree", function() {
     });
     expect(result).toEqual([4,2,6,1,3,5,7]);
   });
+
+    it("should execute an in-order log with callback function", function() {
+    binarySearchTree.value = 4;
+    var list = [2,6,1,3,5,7];
+    for (var i = 0; i < list.length; i++) {
+      binarySearchTree.insert(list[i]);
+    }
+    var result = [];
+    binarySearchTree.inOrderLog(function(value) {
+      result.push(value);
+    });
+    expect(result).toEqual([1, 2, 3, 4, 5, 6, 7]);
+  });
   // add more tests here to test the functionality of binarySearchTree
 });
