@@ -52,7 +52,7 @@ describe("binarySearchTree", function() {
     expect(result).toEqual([4,2,6,1,3,5,7]);
   });
 
-    it("should execute an in-order log with callback function", function() {
+  it("should execute an in-order log with callback function", function() {
     binarySearchTree.value = 4;
     var list = [2,6,1,3,5,7];
     for (var i = 0; i < list.length; i++) {
@@ -63,6 +63,29 @@ describe("binarySearchTree", function() {
       result.push(value);
     });
     expect(result).toEqual([1, 2, 3, 4, 5, 6, 7]);
+  });
+
+  it("should properly rebalance", function() {
+    binarySearchTree.value = 0;
+    for (var i = 1; i < 10; i++) {
+      binarySearchTree.insert(i);
+    }
+
+    var current = binarySearchTree;
+    while (current.left) {
+      current = current.left;
+    }
+    expect(current.depth).toBeLessThan(5);
+
+    current = binarySearchTree
+    while (current.right) {
+      current = current.right;
+    }
+    expect(current.depth).toBeLessThan(5);
+  });
+
+  it("should rebalance only when needed", function() {
+
   });
   // add more tests here to test the functionality of binarySearchTree
 });
