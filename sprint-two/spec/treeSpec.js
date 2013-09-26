@@ -97,23 +97,13 @@ describe("tree", function() {
     tree = generateFullTree();
 
     var result = [];
-    tree.DFTraverse(function (value) {
+    tree.traverse(function (value) {
       result.push(value);
     });
 
     expect(result).toEqual([1, 2, 4, 5, 3, 6, 7]);
   });
 
-  it("should be able to traverse, breadth first", function() {
-    tree = generateFullTree();
-
-    var result = [];
-    tree.BFTraverse(function (value) {
-      result.push(value);
-    });
-
-    expect(result).toEqual([1, 2, 3, 4, 5, 6, 7]);
-  });
 
   // Add more tests here to test the functionality of tree.
 });

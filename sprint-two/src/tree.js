@@ -34,7 +34,7 @@ treeMethods.removeFromParent = function() {
   this.parent = null;
 };
 
-treeMethods.DFTraverse = function (iterator) {
+treeMethods.traverse = function (iterator) {
   iterator(this.value);
 
   if (this.children.length) {
