@@ -24,12 +24,29 @@ var makeBinarySearchTree = function(val) {
       }
     },
     depthFirstLog: function (iterator) {
-      if (this.left) {
-        this.left.depthFirstLog(iterator);
+      var stack = [this];
+      while (stack.length) {
+        var current = stack.pop();
+        if (current && current.right) {
+          stack.push(current.right);
+        }
+        if (current && current.left) {
+          stack.push(current.left);
+        }
+        iterator(current.value);
       }
-      iterator(this.value);
-      if (this.right) {
-        this.right.depthFirstLog(iterator);
+    },
+    breadthFirstLog: function (iterator) {
+      var queue = [this];
+      while (queue.length) {
+        var current = queue.shift();
+        if (current.left) {
+          queue.push(current.left);
+        }
+        if (current.right) {
+          queue.push(current.right);
+        }
+        iterator(current.value);
       }
     }
   };

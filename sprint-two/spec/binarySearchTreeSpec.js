@@ -27,15 +27,29 @@ describe("binarySearchTree", function() {
   });
 
   it("should execute a depth-first log with callback function", function() {
-    var list = [11, 9, 13, 7, 15, 17, 19, 3, 5, 1];
+    binarySearchTree.value = 4;
+    var list = [2,6,1,3,5,7];
     for (var i = 0; i < list.length; i++) {
       binarySearchTree.insert(list[i]);
     }
-    var count = 0;
+    var result = [];
     binarySearchTree.depthFirstLog(function(value) {
-      if (value % 3 === 0) count++;
+      result.push(value);
     });
-    expect(count).toEqual(3);
+    expect(result).toEqual([4, 2, 1, 3, 6, 5, 7]);
+  });
+
+  it("should execute a breadth-first log with callback function", function() {
+    binarySearchTree.value = 4;
+    var list = [2,6,1,3,5,7];
+    for (var i = 0; i < list.length; i++) {
+      binarySearchTree.insert(list[i]);
+    }
+    var result = [];
+    binarySearchTree.breadthFirstLog(function(value) {
+      result.push(value);
+    });
+    expect(result).toEqual([4,2,6,1,3,5,7]);
   });
   // add more tests here to test the functionality of binarySearchTree
 });
