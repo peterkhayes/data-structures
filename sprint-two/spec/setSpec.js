@@ -18,7 +18,6 @@ describe("set", function() {
     set.add({});
     set.add([1, 2, 3]);
     set.add(false);
-    set.add(undefined);
     set.add(null);
 
     expect(set.contains("hi")).toEqual(true);
@@ -27,13 +26,13 @@ describe("set", function() {
     expect(set.contains({})).toEqual(true);
     expect(set.contains([1, 2, 3])).toEqual(true);
     expect(set.contains(false)).toEqual(true);
-    expect(set.contains(undefined)).toEqual(true);
     expect(set.contains(null)).toEqual(true);
-    
+
     expect(set.contains("yo")).toEqual(false);
     expect(set.contains(true)).toEqual(false);
+
   });
-  
+
   it("should be able to remove elements, including non-existent ones", function() {
     set.add("hi");
     expect(set.contains("hi")).toEqual(true);
@@ -49,4 +48,5 @@ describe("set", function() {
     set.remove("twice");
     expect(set.contains("twice")).toEqual(false);
   });
+
 });

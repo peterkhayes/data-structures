@@ -7,19 +7,23 @@ var makeSet = function(){
 var setMethods = {};
 
 setMethods.add = function (element) {
-  this._storage[element] = true;
+  this._storage[JSON.stringify(element)] = true;
 };
 
 setMethods.contains = function (target) {
-  var result = false;
+  console.log("-----");
+  console.log("target is " + JSON.stringify(target));
   for (var key in this._storage) {
-    if (this._storage[key] && key === target) {
-      result = true;
+    console.log("key is " + key);
+    if (this._storage[key] && key === JSON.stringify(target)) {
+      console.log("Match!");
+      return true;
     }
   }
-  return result;
+  console.log("No Match!");
+  return false;
 };
 
 setMethods.remove = function (element) {
-  this._storage[element] = undefined;
+  this._storage[JSON.stringify(element)] = undefined;
 };
