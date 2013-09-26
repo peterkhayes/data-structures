@@ -31,5 +31,39 @@ describe("hashTable", function() {
     expect(hashTable.retrieve(v2)).toEqual(v2);
   });
 
+  it("should have methods named doubleSize and halveSize", function() {
+    expect(hashTable["doubleSize"]).toEqual(jasmine.any(Function));
+    expect(hashTable["halveSize"]).toEqual(jasmine.any(Function));
+  });
+
+  it("should add and delete items, including empty items", function() {
+    hashTable.insert("a", "a");
+    expect(hashTable.retrieve("a")).toEqual("a");
+    hashTable.remove("a");
+    expect(hashTable.retrieve("a")).toEqual(undefined);
+    hashTable.remove("a");
+  });
+
+  it("should double in size", function () {
+    spyOn(hashTable, 'doubleSize');
+    for (var i = 0; i < 20; i++) {
+      hashTable.insert(i.toString(), i);
+    }
+    expect(hashTable.doubleSize).toHaveBeenCalled();
+  });
+
+  it("should halve in size", function() {
+    spyOn(hashTable, 'halveSize');
+
+    for (var i = 0; i < 20; i++) {
+      hashTable.insert(i.toString(), i);
+    }
+    for (i = 0; i <20; i++) {
+      hashTable.remove(i.toString());
+    }
+
+    expect(hastTable.halfSize).toHaveBeenCalled();
+  });
+
   // add more tests!
 });
