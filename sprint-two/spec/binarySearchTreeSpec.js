@@ -77,15 +77,11 @@ describe("binarySearchTree", function() {
     }
     expect(current.depth).toBeLessThan(5);
 
-    current = binarySearchTree
+    current = binarySearchTree;
     while (current.right) {
       current = current.right;
     }
     expect(current.depth).toBeLessThan(5);
-  });
-
-  it("should rebalance only when needed", function() {
-
   });
   // add more tests here to test the functionality of binarySearchTree
 });
