@@ -39,7 +39,7 @@ treeMethods.traverse = function (iterator) {
 
   if (this.children.length) {
     for (var i = 0; i < this.children.length; i++) {
-      this.children[i].DFTraverse(iterator);
+      this.children[i].traverse(iterator);
     }
   }
 };
