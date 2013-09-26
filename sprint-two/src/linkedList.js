@@ -14,6 +14,24 @@ var makeLinkedList = function(){
     this.tail = newNode;
   };
 
+  list.addToHead = function(value) {
+    var newNode = makeNode(value);
+      if (this.head) {
+        this.head.next = newNode;
+      } else {
+        this.tail = newNode;
+      }
+    this.head = newNode;
+  };
+
+  list.removeTail = function() {
+    if (list.tail) {
+      var result = list.tail;
+      list.tail = list.tail.next;
+      return result.value;
+    }
+  };
+
   list.removeHead = function(){
     if (list.head) {
       var result = list.head;
@@ -40,6 +58,7 @@ var makeNode = function(value){
   var node = {};
   node.value = value;
   node.next = null;
+  node.prev = null;
 
   return node;
 };
