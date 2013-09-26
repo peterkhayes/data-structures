@@ -11,12 +11,27 @@ describe("set", function() {
     expect(set.remove).toEqual(jasmine.any(Function));
   });
 
-  it("should be able to contain strings", function() {
+  it("should be able to contain any type of object", function() {
     set.add("hi");
-    set.add("hello");
+    set.add(9);
+    set.add({"foo":"bar"});
+    set.add({});
+    set.add([1, 2, 3]);
+    set.add(false);
+    set.add(undefined);
+    set.add(null);
+
     expect(set.contains("hi")).toEqual(true);
-    expect(set.contains("hello")).toEqual(true);
+    expect(set.contains(9)).toEqual(true);
+    expect(set.contains({"foo":"bar"})).toEqual(true);
+    expect(set.contains({})).toEqual(true);
+    expect(set.contains([1, 2, 3])).toEqual(true);
+    expect(set.contains(false)).toEqual(true);
+    expect(set.contains(undefined)).toEqual(true);
+    expect(set.contains(null)).toEqual(true);
+    
     expect(set.contains("yo")).toEqual(false);
+    expect(set.contains(true)).toEqual(false);
   });
   
   it("should be able to remove elements, including non-existent ones", function() {
