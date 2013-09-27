@@ -19,15 +19,36 @@ var makeRBTree = function () {
         this.fix(toInsert);
       } else { // Tree does not contain nodes.
         this.head = this.makeNode(value);
+        this.head.red = false;
       }
       this.size++;
     },
     fix: function (node) { // After inserting as in a standard BST, fix any problems.
-      
+      var parent = node.parent;
+      if (parent && node.red && parent.red) {
+        var uncle = node.uncle();
+        var gramps = node.parent.parent;
+
+        if (uncle && uncle.red) {
+          parent.red = !parent.red;
+          uncle.red = !uncle.red;
+          gramps.red = !gramps.red;
+          this.fix(gramps);
+        } else if (uncle && uncle.direction === node.direction) {
+          this.rotate(node);
+          this.fix(parent);
+        } else {
+          parent.red = !parent.red;
+          gramps.red = !gramps.red;
+          this.rotate(parent);
+        }
+      }
     },
     contains: function (target) {
+      debugger;
       var result = false;
       this.traverse(this.head, function (value) {
+        console.log("value: " + value);
         if (value === target) {
           result = true;
         }
@@ -46,29 +67,33 @@ var makeRBTree = function () {
         this.traverse(node.right, iterator);
       }
     },
-    rotateLeft: function(top, lower) {
-      if (bottom === top.right) {
-        var temp = bottom.left;
+    rotate: function(node) {
+      var parent = node.parent;
+      var temp;
+      if (node === node.parent.right) {
+        // Rotate right.
+        temp = node.left;
 
-        top.right = temp;
-        temp.parent = top;
-        bottom.left = top;
-        top.parent = bottom;
+        parent.right = temp;
+        node.left = parent;
       } else {
-        console.log("unsuitable for rotate right.");
+        // Rotate left.
+        temp = node.right;
+
+        parent.left = temp;
+        node.right = parent;
+      }
+      parent.parent = node;
+      if (temp) {
+        temp.parent = parent;
+      }
+
+      if (this.head.parent) {
+        this.head = this.head.parent;
       }
     },
-    rotateRight: function(parent, child) {
-      if (bottom === top.left) {
-        var temp = bottom.right;
-
-        top.left = temp;
-        temp.parent = top;
-        bottom.right = top;
-        top.parent = bottom;
-      } else {
-        console.log("unsuitable for rotate right.");
-      }
+    predecesor: function(node) {
+      if (node.direction)
     },
     makeNode:function (v) { // parent, value.
       return {
@@ -89,6 +114,15 @@ var makeRBTree = function () {
             return this.parent.sibling();
           } else {
             return null;
+          }
+        },
+        direction: function() {
+          if (this.parent === null) {
+            return null;
+          } else if (this.parent.left === this) {
+            return "left";
+          } else {
+            return "right";
           }
         }
       };
