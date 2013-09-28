@@ -15,13 +15,15 @@ treeMethods.addChild = function (child){
 };
 
 treeMethods.contains = function(target){
-  var result = (this.value === target);
+  if (this.value === target) {
+    return true;
+  }
   for (var i = 0; i < this.children.length; i++) {
     if (this.children[i].contains(target)) {
-      result = true;
+      return true;
     }
   }
-  return result;
+  return false;
 };
 
 treeMethods.removeFromParent = function() {

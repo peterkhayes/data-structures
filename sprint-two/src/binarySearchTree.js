@@ -50,16 +50,12 @@ var makeBinarySearchTree = function(val) {
 
     // Runs an interator for each value in the tree, depth first.
     depthFirstLog: function (iterator) {
-      var stack = [this];
-      while (stack.length) {
-        var current = stack.pop();
-        if (current && current.right) {
-          stack.push(current.right);
-        }
-        if (current && current.left) {
-          stack.push(current.left);
-        }
-        iterator(current.value);
+      iterator(this.value);
+      if (this.left) {
+        this.left.depthFirstLog(iterator);
+      }
+      if (this.right) {
+        this.right.depthFirstLog(iterator);
       }
     },
 
@@ -92,7 +88,7 @@ var makeBinarySearchTree = function(val) {
     // Calculates the minimum depth of the tree (O(n), unfortunatley).
     minDepth: function(){
       var minL = (this.left ? 1 + this.left.minDepth() : 0);
-      var minR = (this.right ? 1+ this.right.minDepth() : 0);
+      var minR = (this.right ? 1 + this.right.minDepth() : 0);
       return Math.min(minL, minR);
     },
 
@@ -122,7 +118,7 @@ var makeBinarySearchTree = function(val) {
       while (workingQueue.length) {
         var currentList = workingQueue.shift(); // Pop off the current sublist.
         if (currentList.length === 1) { // Single items we add directly.
-          this.insert(currentList[0], true); // True is "noRebalance" flag.
+          this.insert(currentList[0], true); // True is "noRebalance" flag - our tree is already in order.
         } else if (currentList.length === 2) { // Two items we also add directly.
           this.insert(currentList[0], true);
           this.insert((currentList[1]), true);

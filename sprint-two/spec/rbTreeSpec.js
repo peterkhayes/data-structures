@@ -14,9 +14,9 @@ describe("rbTree", function() {
     expect('size' in tree).toBe(true);
   });
 
-  it("should have nodes with properties red and value", function() {
+  it("should have nodes with properties blackness and value", function() {
     tree.insert(1);
-    expect('red' in tree.head).toBe(true);
+    expect('blackness' in tree.head).toBe(true);
     expect('value' in tree.head).toBe(true);
   });
 
@@ -28,6 +28,13 @@ describe("rbTree", function() {
     expect(tree.size).toBe(3);
   });
 
+  it("should insert a LOT of nodes into the tree with no problems", function() {
+    for (var i = 0; i < 10000; i++) {
+      tree.insert(i);
+    }
+    expect(tree.size).toBe(10000);
+  });
+
   it("should insert and find nodes", function() {
     tree.insert(1);
     tree.insert(2);
@@ -37,21 +44,23 @@ describe("rbTree", function() {
     expect(tree.contains(4)).toBe(false);
   });
 
-  it("should remove nodes", function() {
+  it("should remove easy nodes", function() {
     tree.insert(1);
     expect(tree.contains(1)).toBe(true);
     tree.remove(1);
     expect(tree.contains(1)).toBe(false);
+    expect(tree.size).toBe();
 
     // Once more, with feeling!
     tree.insert(1);
-    expect(tree.contains(1)).toBe(true);
+    tree.insert(2);
     tree.remove(1);
     expect(tree.contains(1)).toBe(false);
+    expect(tree.contains(2)).toBe(true);
   });
 
+
   it("should traverse the tree", function() {
-    debugger;
     var list = [4,2,6,1,3,5,7];
     for (var i = 0; i < list.length; i++) {
       tree.insert(list[i]);

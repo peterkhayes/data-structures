@@ -2,13 +2,14 @@ var makeRBTree = function () {
   return {
     head: null,
     size: 0,
+
     insert: function (value) { // The standard BST insert.
       if (this.size) { // Tree already contains nodes.
         var toInsert = this.makeNode(value);
         var currentNode = this.head;
         while (true) { // Until we find the right place in the tree...
           var direction = (toInsert.value > currentNode.value ? "right" : "left");
-            if (currentNode[direction]) {
+            if (currentNode[direction]) { // Go right.
               currentNode = currentNode[direction];
             } else { // Go left.
               toInsert.parent = currentNode;
@@ -19,36 +20,35 @@ var makeRBTree = function () {
         this.fix(toInsert);
       } else { // Tree does not contain nodes.
         this.head = this.makeNode(value);
-        this.head.red = false;
+        this.head.blackness = 1;
       }
       this.size++;
     },
     fix: function (node) { // After inserting as in a standard BST, fix any problems.
       var parent = node.parent;
-      if (parent && node.red && parent.red) {
+      if (parent && node.blackness === 0 && parent.blackness === 0) {
         var uncle = node.uncle();
         var gramps = node.parent.parent;
 
-        if (uncle && uncle.red) {
-          parent.red = !parent.red;
-          uncle.red = !uncle.red;
-          gramps.red = !gramps.red;
+        if (uncle && uncle.blackness === 0) {
+          parent.swapColor();
+          uncle.swapColor();
+          gramps.swapColor();
           this.fix(gramps);
         } else if (uncle && uncle.direction === node.direction) {
           this.rotate(node);
           this.fix(parent);
         } else {
-          parent.red = !parent.red;
-          gramps.red = !gramps.red;
+          parent.swapColor();
+          gramps.swapColor();
           this.rotate(parent);
         }
       }
     },
+
     contains: function (target) {
-      debugger;
       var result = false;
       this.traverse(this.head, function (value) {
-        console.log("value: " + value);
         if (value === target) {
           result = true;
         }
@@ -92,12 +92,11 @@ var makeRBTree = function () {
         this.head = this.head.parent;
       }
     },
-    predecesor: function(node) {
-      if (node.direction)
-    },
+    //predecesor: function(node) {
+    //},
     makeNode:function (v) { // parent, value.
       return {
-        red: true,
+        blackness: 0,
         value: (v === undefined ? null : v),
         parent: null,
         left: null,
@@ -123,6 +122,13 @@ var makeRBTree = function () {
             return "left";
           } else {
             return "right";
+          }
+        },
+        swapColor: function() {
+          if (this.blackness === 1) {
+            this.blackness = 0;
+          } else {
+            this.blackness = 1;
           }
         }
       };

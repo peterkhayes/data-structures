@@ -20,5 +20,5 @@ setMethods.contains = function (target) {
 };
 
 setMethods.remove = function (element) {
-  this._storage[JSON.stringify(element)] = undefined;
+  delete this._storage[JSON.stringify(element)];
 };

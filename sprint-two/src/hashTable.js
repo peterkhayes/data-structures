@@ -1,24 +1,22 @@
 var HashTable = function(){
   this._limit = 8;
-
-  // Use a limited array to store inserted elements.
-  // It'll keep you from using too much space. Usage:
-  //
-  //   limitedArray.set(3, 'hi');
-  //   limitedArray.get(3); // alerts 'hi'
-  //
-  // There's also a '.each' method that you might find
-  // handy once you're working on resizing
+  this._slotsUsed = 0;
+  this._size = 0;
   this._storage = makeLimitedArray(this._limit);
 };
 
 HashTable.prototype.insert = function(k, v){
   var i = getIndexBelowMaxForKey(k, this._limit);
   var slot = this._storage.get(i);
+  this._size++;
   if (slot) {
     slot.push([k,v]); // slot stores two-object arrays, which are key-value pairs.  using objects is cheating?
   } else {
     this._storage.set(i, [[k,v]]);
+    this._slotsUsed++;
+    if (this._slotsUsed >= this._limit * 3/4) {
+      this.doubleSize();
+    }
   }
 };
 
@@ -38,10 +36,25 @@ HashTable.prototype.remove = function(k){
   var slot = this._storage.get(i);
   for (var j = 0; j < slot.length; j++) {
     if (slot[j][0] === k) {
-      console.log(slot);
       slot.splice(j, 1);
+      this._size--;
+      if (slot[j].length === 0) {
+        delete slot[j];
+        this._slotsUsed--;
+      }
     }
   }
+  if (this._slotsUsed < this._limit / 4 && this._limit > 8) {
+    this.halveSize();
+  }
+};
+
+
+HashTable.prototype.doubleSize = function () {
+
+};
+
+HashTable.prototype.halveSize = function () {
 
 };
 
