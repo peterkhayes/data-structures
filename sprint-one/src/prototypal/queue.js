@@ -11,17 +11,17 @@ var makeQueue = function(){
 var queueMethods = {};
 
 queueMethods.enqueue = function(value) {
-	this.storage[this.lastIndex] = value;
-	this.lastIndex++;
+  this.storage[this.lastIndex++] = value;
 };
 queueMethods.dequeue = function () {
-	if(this.lastIndex - this.firstIndex) {
-		var value = this.storage[this.firstIndex];
-		this.storage[this.firstIndex] = undefined;
-		this.firstIndex++;
-		return value;
-	}
+  if(this.lastIndex - this.firstIndex) {
+    var value = this.storage[this.firstIndex];
+    this.storage[this.firstIndex] = undefined;
+    this.firstIndex++;
+    return value;
+  }
+  return undefined;
 };
 queueMethods.size = function () {
-	return (this.lastIndex - this.firstIndex);
+  return (this.lastIndex - this.firstIndex);
 };

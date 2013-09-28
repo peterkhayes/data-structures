@@ -9,6 +9,7 @@ var makeStack = function() {
   return instance;
 };
 var stackMethods = {};
+
 stackMethods.push = function(value){
   this.storage[this.len] = value;
   this.len++;
@@ -20,6 +21,7 @@ stackMethods.pop = function(){
       this.len--;
       return value;
     }
+    return undefined;
 };
 stackMethods.size = function() {
   return this.len;
